@@ -1,0 +1,15 @@
+{
+  "name": "quay-so-minh-bach",
+  "version": "1.0.0",
+  "description": "Giao diện quay số tiếng Việt và hợp đồng thông minh Solidity minh bạch hóa vé, vòng quay và quỹ thưởng.",
+  "main": "abi.js",
+  "scripts": {
+    "compile": "node scripts/compile.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "solc": "^0.8.35"
+  }
+}

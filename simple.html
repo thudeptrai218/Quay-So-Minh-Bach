@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quay Số Minh Bạch</title>
+  <script defer src="simple.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #eef2f7;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 24px auto 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-panel,
+    .box,
+    .metric {
+      background: #fff;
+      border: 1px solid #d9e2ef;
+      border-radius: 8px;
+    }
+
+    .hero-panel {
+      padding: 26px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #0f766e;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    p {
+      color: #526176;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin-bottom: 0;
+      font-size: 17px;
+    }
+
+    .status-panel {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .metric {
+      padding: 14px;
+    }
+
+    .metric span {
+      display: block;
+      color: #667085;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .box {
+      padding: 18px;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #344054;
+      font-weight: 700;
+    }
+
+    input,
+    button {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    input {
+      border: 1px solid #c7d2e1;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: #0f766e;
+      outline: 3px solid rgba(15, 118, 110, 0.14);
+    }
+
+    button {
+      border: 0;
+      padding: 10px 14px;
+      background: #0f766e;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #344054;
+    }
+
+    button.danger {
+      background: #b42318;
+    }
+
+    button.small {
+      width: auto;
+      min-height: 34px;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+
+    button:hover {
+      filter: brightness(0.94);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .number {
+      display: grid;
+      place-items: center;
+      width: min(210px, 100%);
+      aspect-ratio: 1;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      background: #111827;
+      color: #fff;
+      font-size: clamp(54px, 9vw, 92px);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .result {
+      min-height: 30px;
+      color: #101828;
+      font-weight: 800;
+    }
+
+    .message {
+      min-height: 24px;
+      margin: 0 0 12px;
+      color: #0f766e;
+      font-weight: 700;
+    }
+
+    .list {
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: 1px solid #e1e8f2;
+      border-radius: 6px;
+      background: #f8fafc;
+    }
+
+    .winner-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(15, 23, 42, 0.68);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .winner-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .winner-dialog {
+      position: relative;
+      width: min(520px, 100%);
+      overflow: hidden;
+      border: 1px solid #b7e4dc;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.34);
+      transform: translateY(18px) scale(0.96);
+      animation: winner-pop 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .winner-modal:not(.is-open) .winner-dialog {
+      animation: none;
+    }
+
+    .winner-dialog::before,
+    .winner-dialog::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.12);
+      animation: winner-pulse 1800ms ease-in-out infinite;
+    }
+
+    .winner-dialog::before {
+      top: -96px;
+      left: -78px;
+    }
+
+    .winner-dialog::after {
+      right: -86px;
+      bottom: -104px;
+      background: rgba(180, 35, 24, 0.1);
+      animation-delay: 240ms;
+    }
+
+    .winner-content {
+      position: relative;
+      z-index: 1;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .winner-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #e6f6f3;
+      color: #0f766e;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .winner-number {
+      display: grid;
+      place-items: center;
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 16px;
+      border-radius: 8px;
+      background: #111827;
+      color: #fff;
+      font-size: 54px;
+      font-weight: 900;
+      animation: number-flash 900ms ease-in-out both;
+    }
+
+    .winner-title {
+      margin-bottom: 8px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .winner-name {
+      margin-bottom: 18px;
+      color: #0f766e;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .winner-close {
+      width: auto;
+      min-width: 150px;
+    }
+
+    @keyframes winner-pop {
+      0% {
+        transform: translateY(18px) scale(0.96);
+        opacity: 0;
+      }
+      70% {
+        transform: translateY(-4px) scale(1.02);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes winner-pulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.72;
+      }
+      50% {
+        transform: scale(1.16);
+        opacity: 1;
+      }
+    }
+
+    @keyframes number-flash {
+      0% {
+        transform: rotate(-5deg) scale(0.72);
+        opacity: 0;
+      }
+      55% {
+        transform: rotate(3deg) scale(1.08);
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(0) scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .winner-dialog,
+      .winner-dialog::before,
+      .winner-dialog::after,
+      .winner-number {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      main {
+        width: min(100% - 20px, 1180px);
+        margin-top: 10px;
+      }
+
+      .hero-panel,
+      .box {
+        padding: 14px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .list li {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="winnerModal" class="winner-modal" aria-hidden="true">
+    <div class="winner-dialog" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
+      <div class="winner-content">
+        <span class="winner-label">Có người trúng giải</span>
+        <div id="winnerModalNumber" class="winner-number">--</div>
+        <h2 id="winnerTitle" class="winner-title">Chúc mừng người thắng</h2>
+        <p id="winnerModalName" class="winner-name"></p>
+        <button id="winnerCloseButton" class="winner-close" type="button">Đóng thông báo</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-panel">
+        <p class="eyebrow">Bản demo giao diện + mô phỏng dữ liệu</p>
+        <h1>Quay Số Minh Bạch</h1>
+        <p class="hero-copy">Người chơi nhập tên, chọn số từ 00 đến 99 và quay thử ngay trên trình duyệt. Phần blockchain bên dưới mô tả rõ những điểm đã được nâng cấp trong hợp đồng thông minh so với bản ban đầu.</p>
+      </div>
+
+      <aside class="status-panel" aria-label="Tổng quan vòng quay">
+        <div class="metric">
+          <span>Tổng vé hiện tại</span>
+          <strong id="ticketCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>Số vừa quay</span>
+          <strong id="lastNumber">--</strong>
+        </div>
+        <div class="metric">
+          <span>Trạng thái demo</span>
+          <strong id="demoStatus">Đang nhận vé</strong>
+        </div>
+      </aside>
+    </section>
+
+    <div class="grid">
+      <section class="box">
+        <h2>Nhập vé</h2>
+        <p id="message" class="message" aria-live="polite"></p>
+
+        <label for="nameInput">Tên người chơi</label>
+        <input id="nameInput" type="text" autocomplete="name" placeholder="Ví dụ: Nguyễn An">
+
+        <label for="numberInput">Số dự đoán</label>
+        <input id="numberInput" type="text" inputmode="numeric" maxlength="2" placeholder="00-99">
+
+        <div class="actions">
+          <button id="addTicketButton" type="button">Thêm vé</button>
+          <button id="resetTicketsButton" class="secondary" type="button">Xóa vé hiện tại</button>
+        </div>
+
+        <ul id="ticketList" class="list"></ul>
+      </section>
+
+      <section class="box">
+        <h2>Quay số</h2>
+        <div class="number" id="winningNumber">--</div>
+        <div class="actions">
+          <button id="drawButton" type="button">Quay thưởng</button>
+          <button id="clearHistoryButton" class="danger" type="button">Xóa lịch sử</button>
+        </div>
+        <div class="result" id="resultText">Chưa quay.</div>
+      </section>
+
+      <section class="box wide">
+        <h2>Lịch sử quay</h2>
+        <ul id="historyList" class="list"></ul>
+      </section>
+
+    </div>
+  </main>
+</body>
+</html>
