@@ -4,7 +4,7 @@
     </a>
 </h2>
 <h2 align="center">
-    Triển khai ứng dụng AI, IoT
+    Công nghệ Blockchain
 </h2>
 <div align="center">
     <p align="center">
