@@ -87,3 +87,4 @@ npm.cmd run compile
 ```
 
 Lệnh này biên dịch hợp đồng và cập nhật lại `abi.js`.
+## 🖼️ Poster Đề Tài <div align="center"> <h3>📄 Poster Báo Cáo</h3> <a href="./Poster.pptx"> <img src="https://img.shields.io/badge/TẢI%20POSTER-BLOCKCHAIN-red?style=for-the-badge&logo=microsoftpowerpoint"> </a> </div> > Nhấn vào nút phía trên để xem hoặc tải Poster báo cáo của đề tài.
